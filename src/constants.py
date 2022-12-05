@@ -12,6 +12,8 @@ CITIES = {
     "Surabaya": ["Surabaya, Indonesia"],
     "Makassar": ["Makassar, Indonesia"],
     "Singapore": ["Singapore"],
+    "Hanoi": ["Hanoi, Vietnam"],
+    "Ho_Chi_Minh_City": ["Ho Chi Minh City, Vietnam"],
     "Bengaluru": ["Bengaluru, India"],
     "Tirana": ["Tirana, Albania"],
     "Yerevan": ["Yerevan, Armenia"],
