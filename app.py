@@ -118,33 +118,42 @@ def page_analysis():
     models = {
         "Autoencoder - H3": {
             "cell_type": "h3",
-            "embeddings": "data/embeddings_h3_9_v13.npy",
+            "res": 14,
+            "embeddings_filename": "data/embeddings_h3_9_v13.npy",
         },
         "Binary - H3": {
             "cell_type": "h3",
-            "embeddings": "data/embeddings_h3_9_v10.npy",
+            "res": 14,
+            "embeddings_filename": "data/embeddings_h3_9_v10.npy",
         },
         "Autoencoder - S2": {
             "cell_type": "s2",
-            "embeddings": "data/embeddings_s2_14_v15.npy",
+            "res": 9,
+            "embeddings_filename": "data/embeddings_s2_14_v15.npy",
         },
     }
     v = st.sidebar.selectbox("Version", list(models.keys()))
-    embeddings = load_embeddings(models[v]["embeddings"])
+    cell_type = models[v]["cell_type"]
+    res = models[v]["res"]
+    embeddings_filename = models[v]["embeddings_filename"]
+
+    embeddings = load_embeddings(embeddings_filename)
     h3_df = load_csv("data/h3_9_city.csv")
     s2_df = load_csv("data/s2_14_city.csv")
 
-    select_city = st.sidebar.selectbox("Select city", list(CITIES.keys()))
-    if models[v]["cell_type"] == "h3":
+    select_city = st.sidebar.selectbox("Select city", list(CITIES.keys()), 5)
+    if cell_type == "h3":
         select_regions = h3_df["city"] == select_city
         _df = h3_df[select_regions]
     else:
         select_regions = s2_df["city"] == select_city
         _df = s2_df[select_regions]
 
-    fill_color = pca_scale(embeddings[select_regions])
+    st.subheader(select_city)
+    st.write(f"**{cell_type} grids, resolution {res}**")
 
-    centre, df0 = _cast_gdf(models[v]["cell_type"], _df, fill_color)
+    fill_color = pca_scale(embeddings[select_regions])
+    centre, df0 = _cast_gdf(cell_type, _df, fill_color)
     add_map(centre, df0)
 
 
