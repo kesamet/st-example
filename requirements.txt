@@ -5,3 +5,4 @@ streamlit
 geopandas==0.12.0
 h3==3.7.4
 shapely==1.8.5.post1
+s2sphere== 0.2.5
